@@ -83,5 +83,45 @@ module.exports = {
       console.log(sql);
       console.log("asiakas poistettu")
     })
-  }
+  },
+
+  muokkaaAsiakas: function (req, res) {
+    console.log(req.body);
+    var id = req.body.id;
+    var nimi = req.body.nimi;
+    var osoite = req.body.osoite;
+    var postinro = req.body.postinro;
+    var postitmp = req.body.postitmp;
+    var avain = req.body.avain;
+
+    if (nimi || osoite || postinro || postitmp || avain != "") {
+
+      if (nimi && osoite && postinro && postitmp && avain != "") {
+        var sql = "UPDATE asiakas SET "
+        sql += "nimi = '" + nimi + "' "
+        sql += ",osoite = '" + osoite + "' "
+        sql += ",postinro = '" + postinro + "' "
+        sql += ",postitmp = '" + postitmp + "' "
+        sql += ",asty_avain = '" + avain + "' "
+        sql += "WHERE avain = '" + id + "'; ";
+        connection.query(sql, function (err, result) {
+          console.log("perille meni");
+          res.send("200");
+        })
+      } else {
+        connection.query(function (err, result) {
+          console.log("ei toimi")
+          res.send("400")
+        })
+      }
+    }
+  },
+  haeDialogi: function (req, res) {
+    var id = req.query.avain;
+    console.log(id)
+    connection.query('SELECT nimi, osoite, postinro, postitmp, asty_avain FROM asiakas WHERE avain =' + id + '', function (error, results, fields) {
+      res.json(results);
+    });
+  },
 };
+

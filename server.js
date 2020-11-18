@@ -19,6 +19,10 @@ app.route("/lisaa").post(customerController.lisaaAsiakas);
 
 app.route("/poista/:id").delete(customerController.poistaAsiakas);
 
+app.route("/muokkaa").put(customerController.muokkaaAsiakas);
+
+app.route("/haeDialogi").get(customerController.haeDialogi);
+
 
 app.listen(3000, function () {
     console.log("Toimii portissa 3000!");

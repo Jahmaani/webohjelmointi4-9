@@ -15,8 +15,8 @@
 </head>
 
 <body>
-    <div class="row" style="margin: 20px;">
-        <div class="col-sm-9">
+    <div class="row container-fuild" style="margin: 20px;">
+        <div class="col-lg-9">
             <input id="nimi" type="text" placeholder="Nimi" name="nimi">
             <input id="osoite" type="text" placeholder="Osoite" name="osoite">
             <select class="avain" id="avain" name="avain">
@@ -38,6 +38,9 @@
                             <th style="min-width: 100px; max-width: 125px;">
                                 <!--poista-näppäimet tähän sarakkeeseen-->
                             </th>
+                            <th style="min-width: 100px; max-width: 125px;">
+                                <!--muokkaa-näppäimet tähän sarakkeeseen-->
+                            </th>
                         </tr>
                     </thead>
                     <tbody id="taulukko">
@@ -45,8 +48,7 @@
                 </table>
             </div>
         </div>
-        <div class="col-sm-3">
-
+        <div class="col-lg-3">
             <input id="lnimi" type="text" placeholder="Nimi" name="lnimi">
             <input id="losoite" type="text" placeholder="Osoite" name="losoite">
             <input id="lpostinro" type="text" placeholder="Postinumero" name="lpostinro">
@@ -55,8 +57,19 @@
                 <option value="">valitse avain</option>
             </select>
             <button class="btn btn-success" id="lisaaBtn" type="">Lisää Asiakas</button>
-
         </div>
+    </div>
+
+    <div id="dialog" title="Muokkaa" style="display: none;">
+        <input value="" type="text" name="mid" id="mid" style="display: none;">
+        <input id="mnimi" type="text" placeholder="Nimi" name="lmnimi">
+        <input id="mosoite" type="text" placeholder="Osoite" name="mosoite">
+        <input id="mpostinro" type="text" placeholder="Postinumero" name="mpostinro">
+        <input id="mpostitmp" type="text" placeholder="Postitoimipaikka" name="mpostitmp">
+        <select class="avain" id="mavain" name="mavain">
+            <option value="">valitse avain</option>
+        </select>
+        <button class="btn btn-success" id="muokkaaBtn" onclick="muokkaa()">Tallenna</button>
     </div>
 
 

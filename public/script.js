@@ -54,17 +54,53 @@ $(document).ready(function () {
 
     poista = (id) => {
         $.ajax({
-            url: 'http://localhost:3000/poista/'+id,
+            url: 'http://localhost:3000/poista/' + id,
             type: "delete",
-            // data: {
-            //     avain: (id)
-            // },
             success: (result) => {
                 alert("Poisto onnistui!")
                 hae();
             }
         });
     }
+
+    muokkaa = function () {
+        $.ajax({
+            url: "http://localhost:3000/muokkaa",
+            type: "put",
+            data: {
+                id: $("#mid").val(),
+                nimi: $("#mnimi").val(),
+                osoite: $("#mosoite").val(),
+                postinro: $("#mpostinro").val(),
+                postitmp: $("#mpostitmp").val(),
+                avain: $("#mavain").val()
+            },
+            success: (result) => {
+                console.log(result);
+                if (result === "200") {
+                    alert("MUOKKAUS ONNISTUI!");
+                    $("#dialog").dialog("close");
+                    hae();
+                } else {
+                    alert("MUOKKAUS EI ONNISTUNUT, KAIKISSA KENTISSÄ PITÄÄ OLLA TIETO!");
+                }
+            }
+        })
+
+    }
+
+
+    avaaDialog = function (id) {
+        var id = id;
+        console.log(id);
+        $("#mid").val(id);
+        $("#dialog").dialog();
+        haeTiedotDialogiin(id);
+    }
+
+    // $(".muokkaaBtn").click(() => {
+    //     avaaDialog();
+    // });
 
     $("#searchBtn").click(() => {
         hae();
@@ -74,12 +110,42 @@ $(document).ready(function () {
         lisaa();
     });
 
-    $("#poistaBtn").click((id) => {
-        id = $(this).val();
-        poista();
-    });
-});
+    // $("#poistaBtn").click((id) => {
+    //     id = $(this).val();
+    //     poista();
+    // });
+    // $(".muokkaaBtn").click(() => {
+    //     console.log("toimii")
+    //     var x = $("#muokkaaDialog")
+    //     x.show();
+    // });
 
+    //haetaan tiedot dialogiin
+    haeTiedotDialogiin = function (id) {
+        console.log('hakeetietoja');
+        $.get({
+            url: `http://localhost:3000/haeDialogi`,
+            data: {
+                avain: id
+            },
+            success: (result) => {
+                showInDialog(result);
+            }
+        })
+    }
+});
+//dialogin elementteihin tietojenvienti
+showInDialog = (result) => {
+    result.forEach((element) => {
+        $("#mnimi").val(element.nimi);
+        $("#mosoite").val(element.osoite);
+        $("#mpostinro").val(element.postinro);
+        $("#mpostitmp").val(element.postitmp);
+        $("#mavain").val(element.asty_avain);
+    })
+}
+
+//tableen tietojenvienti
 showResultInTable = (result) => {
     result.forEach((element) => {
         let trstr = "<tr><td>" + element.NIMI + "</td>\n";
@@ -89,12 +155,20 @@ showResultInTable = (result) => {
         trstr += "<td>" + element.LUONTIPVM + "</td>\n";
         trstr += "<td>" + element.ASTY_AVAIN + "</td>";
         trstr +=
-            "<td><button class='btn btn-warning' 'poistaBtn' value=" +
+            "<td><button class='btn btn-danger' value=" +
             element.AVAIN +
             " onclick=poista(" +
             element.AVAIN +
             ")>" +
             "poista" +
+            "</button></td>";
+        trstr +=
+            "<td><button class='btn btn-warning' value=" +
+            element.AVAIN +
+            " onclick=avaaDialog(" +
+            element.AVAIN +
+            ")>" +
+            "muokkaa" +
             "</button></td>";
         trstr += "</tr>\n";
         $("#data tbody").append(trstr);
