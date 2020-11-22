@@ -98,9 +98,6 @@ $(document).ready(function () {
         haeTiedotDialogiin(id);
     }
 
-    // $(".muokkaaBtn").click(() => {
-    //     avaaDialog();
-    // });
 
     $("#searchBtn").click(() => {
         hae();
@@ -109,16 +106,6 @@ $(document).ready(function () {
     $("#lisaaBtn").click(() => {
         lisaa();
     });
-
-    // $("#poistaBtn").click((id) => {
-    //     id = $(this).val();
-    //     poista();
-    // });
-    // $(".muokkaaBtn").click(() => {
-    //     console.log("toimii")
-    //     var x = $("#muokkaaDialog")
-    //     x.show();
-    // });
 
     //haetaan tiedot dialogiin
     haeTiedotDialogiin = function (id) {
